@@ -94,9 +94,11 @@ hvsync_generator hvsync_gen(
 	.vpos(vpos)
 );
 
-wire r = display_on && 0;
-wire g = display_on && 0;
-wire b = display_on && 0;
+// (hpos&7) == 0 <=> hpos[2:0] == 0 (dung slice)
+// (hpos&7) == 0 <=> (hpos % 8) == 0 (dung phep chia)
+wire r = display_on && (((hpos&7)==0)&&((vpos&7)==0));
+wire g = display_on && (vpos[4] || hpos[4]);
+wire b = display_on && hpos[4];
 
 assign rgb = {b,g,r};
 endmodule
