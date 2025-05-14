@@ -75,6 +75,7 @@ car_bitmap car(
 );
 
 // start Y counter when we hit the top border (player_y)
+// do bat dau tu 15 nen xe bi nguoc
 always @(posedge hsync)
 	if (vpos == player_y)
 		car_sprite_yofs <= 15;
@@ -89,7 +90,7 @@ always @(posedge clk)
 		car_sprite_xofs <= car_sprite_xofs - 1;
 
 // mirror sprite in X direction
-wire [3:0] car_bits = car_sprite_bits[3] ? car_sprite_xofs ^ 7 : car_sprite_xofs;
+wire [3:0] car_bits = car_sprite_xofs[3] ? car_sprite_xofs ^ 7 : car_sprite_xofs;
 
 // reduced 4-bit value to 3 bits and lookup bit in ROM
 wire car_gfx = car_sprite_bits[car_bits[2:0]];
